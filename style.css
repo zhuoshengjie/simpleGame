@@ -1,0 +1,81 @@
+.background {
+    background: rgb(52, 166, 251);
+    table-layout: fixed;
+    border-spacing: 0;
+}
+.background td {
+    padding: 0;
+}
+.lava {
+    background: rgb(255, 100, 100);
+}
+.wall {
+    background: white;
+}
+
+/* actor类为演员提供了绝对位置 */
+.actor {
+    position: absolute;
+}
+/* 它们的类型名称被用作额外的类来为它们提供颜色 */
+.coin {
+    background: rgb(241, 229, 89);
+}
+.player {
+    background: rgb(64, 64, 64);
+}
+/**
+ * 通过将关卡的当前状态作为类名添加到包装器，我们可以通过添加仅在玩家具有 给定类的祖先元素时才生效的
+ * css规则来使玩家在赢得或输掉游戏时演员的样式略有不同
+ */
+ /* 碰到熔岩后，玩家的颜色变成深红色，表明他被烧焦了。当收集到最后一枚硬币时，我们会为玩家添加两个
+ 模糊的白色阴影，一个在左上角，另一个在右上角，以创建白色光晕效果 */
+
+ .lost .player {
+     background: rgb(160, 64, 64);
+ }
+ .won .player {
+     box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+ }
+
+ /* 不能保证关卡总会恰好铺满视口（viewport）——我们用来绘制游戏的元素。
+ 这就是需要scrollPlayerIntoView调用的原因。
+ 它确保如果关卡延伸到视口外，我们会滚动此视口以确保玩家位于其中心位置。 */
+ 
+ /**
+  * 以下css为游戏包装dom元素提供了最大尺寸，并确保延伸到视口方框外的任何内容都不可见
+  * 我们还给它一个相对位置，以便它内部的演员相对于关卡的左上角定位
+  */
+  .game {
+      overflow: hidden;
+      /* max-width: 600px; */
+      max-width: 350px;
+      max-height: 450px;
+      position: relative;
+  }
+ /* 大于351 小于420 */	
+ /* @media screen and (max-width:600px) {
+	html,body .game{
+        overflow: hidden;
+          max-width: 350px;
+          max-height: 450px;
+          position: relative;
+        font-size:0.58rem;
+    }
+    .btnPart {
+        display: flex !important;
+    }
+}
+
+@media only screen  and (max-device-width:600px) {
+	html,body .game{
+        overflow: hidden;
+          max-width: 350px;
+          max-height: 450px;
+          position: relative;
+        font-size:0.58rem;
+    }
+    .btnPart {
+        display: flex !important;
+    }
+} */

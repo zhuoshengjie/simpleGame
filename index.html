@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清凉解暑小游戏</title>
+    <link rel="stylesheet" href="./style.css">
+    <!-- 百度统计代码 -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?fe1ace0b31698856e3b66a8ca719d2a3";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+    <style>
+        .wrap {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .screen {
+            border: 3px solid #666;
+        }
+        /* 按钮样式 */
+        .btnPart {
+            
+            width: 100%;
+            /* margin-top: 50px; */
+            /* height: 30%; */
+            display: flex;
+            touch-action: none;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid red; */
+            
+        }
+        i {
+            width: 55px;
+            height: 55px;
+            background: #5a65f1;
+            display: block;
+            position: relative;
+            border: 1px solid #000;
+            border-radius: 50%;
+            box-shadow: 0 3px 3px rgb(0 0 0 / 20%);
+        }
+        i::after {
+            box-shadow: inset 0 -5px 10px rgb(0 0 0 / 80%);
+        }
+        .active {
+            box-shadow: inset 0 5px 5px rgb(0 0 0 / 60%);
+        }
+        i::after, i::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            /* box-shadow: inset 0 5px 10px hsl(0deg 0% 100% / 80%); */
+        }
+        .btnPart div {
+                padding: 10px;
+                margin: 10px;
+                /* border: 1px solid red; */
+                text-align: center;
+            }
+        .jump {
+            margin-left: 40px !important;
+        }
+        .copyRight {
+            text-align: center;
+            position: absolute;
+            bottom: 20px;
+        }
+        *{padding:0;margin:0;box-sizing: border-box;font-size: 14px;}
+        .tab {
+            width: 100%;
+            height: 40px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .content {
+            height: 100%;
+            width: 80%;
+            background: #f1f3f4;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        /* .slideThree */
+        .slideThree {
+        width: 80px;
+        height: 26px;
+        background: #333;
+        margin: 20px auto;
+        position: relative;
+        border-radius: 50px;
+        box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.2);
+        }
+        .slideThree:after {
+        content: "OFF";
+        color: #000;
+        position: absolute;
+        right: 10px;
+        z-index: 0;
+        font: 12px/26px Arial, sans-serif;
+        font-weight: bold;
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.15);
+        }
+        .slideThree:before {
+        content: "ON";
+        color: #27ae60;
+        position: absolute;
+        left: 10px;
+        z-index: 0;
+        font: 12px/26px Arial, sans-serif;
+        font-weight: bold;
+        }
+        .slideThree label {
+        display: block;
+        width: 34px;
+        height: 20px;
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        z-index: 1;
+        background: #fcfff4;
+        background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+        border-radius: 50px;
+        transition: all 0.4s ease;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+        }
+        .slideThree input[type="checkbox"] {
+        visibility: hidden;
+        }
+        .slideThree input[type="checkbox"]:checked + label {
+        left: 43px;
+        }
+
+        /* end .slideThree */
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div id="screen" class="screen"></div>
+        <div class="tab">
+            <div class="content">
+                <div class="slideThree">  
+                    <input type="checkbox" value="None" id="slideThree" name="check" checked />
+                    <label for="slideThree"></label>
+                  </div>
+            </div>
+        </div>
+        <div class="btnPart">
+            <div>
+                <i id="leftBtn"></i>
+                <span>←</span>
+            </div>
+            <div>
+                <i id="rightBtn"></i>
+                <span>→</span>
+            </div>
+            <div class="jump">
+                <i id="jumpBtn"></i>
+                <span>跳</span>
+            </div>
+        </div>
+        <audio src="./jump.mp3"></audio>
+        <div class="copyRight">
+            <p>© - 🍉 - <a href="https://zhuoshengjie.github.io/">zhuoshengjie</a></p>
+            <p>since 2021</p>
+        </div>
+    </div>
+    <script src="./DOMDisplsy.js"></script>
+    <script src="./Level.js"></script>
+    <script src="./levelPlan.js"></script>
+    <script>
+        // 最初版代码开始
+        // let simpleLevel = new Level(simpleLevelPlan)
+        // let display = new DOMDisplay(document.body, simpleLevel)
+        // display.syncState(State.start(simpleLevel))
+        // 最初版代码结束
+
+
+        /**
+         * runLevel函数接收一个level对象和一个显示构造函数并返回一个promise。
+         * 它显示关卡（在document.body中）并让用户播放它。当关卡结束（输了或赢了)时，runLevel会等待一秒钟
+         * （让用户看发生了什么），然后清除显示，停止动画，并用游戏结束状态来解决这个promise
+         */
+         function runLevel(level, Display) {
+            let screenDom = document.getElementById('screen')
+            let display = new Display(screenDom, level)
+            let state = State.start(level)
+            let ending = 1
+            return new Promise(resolve => {
+                runAnimation(time => {
+                    state = state.update(time, arrowKeys)
+                    display.syncState(state)
+                    if (state.status == 'playing') {
+                        return true
+                    } else if (ending > 0) {
+                        ending -= time
+                        return true
+                    } else {
+                        display.clear()
+                        resolve(state.status)
+                        return false
+                    }
+                })
+            })
+        }
+        /**
+         * 本游戏是由一系列关卡组成的。每当玩家死亡时，就从当前关卡重新开始。当一个关卡完成后，我们将进入下一个关卡
+         * 这可以通过以下函数表示
+         * 此函数需要传入关卡地形图（字符串）的数组和显示器构造函数
+        */
+       async function runGame(plans, Display) {
+           for(let level=0; level<plans.length;) {
+               let status = await runLevel(new Level(plans[level]), Display)
+               if(status == 'lost') alert('游戏结束，gg！')
+               if(status == 'won') level++
+           }
+           console.log("You've won!!!!")
+       }
+       runGame(GAME_LEVELS, DOMDisplay)
+    </script>
+</body>
+</html>
